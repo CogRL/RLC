@@ -1,0 +1,134 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Import Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+@layer base {
+  body {
+    @apply font-sans bg-slate-950 text-gray-100 antialiased;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display font-semibold text-white;
+  }
+
+  h1 {
+    @apply text-4xl md:text-5xl lg:text-6xl;
+  }
+
+  h2 {
+    @apply text-3xl md:text-4xl;
+  }
+
+  h3 {
+    @apply text-2xl md:text-3xl;
+  }
+
+  p {
+    @apply text-base leading-relaxed text-gray-300;
+  }
+
+  a {
+    @apply text-primary hover:text-primary-light transition-colors duration-200;
+  }
+
+  .prose {
+    @apply text-gray-300;
+    h1,h2,h3,h4,h5,h6 { @apply text-white; }
+    a { @apply text-primary hover:text-primary-light; }
+    strong { @apply text-white; }
+    code { @apply bg-slate-800 text-primary p-1 rounded; }
+  }
+}
+
+@layer components {
+  /* Buttons */
+  .btn {
+    @apply inline-flex items-center justify-center px-6 py-3 border border-transparent rounded-lg font-medium text-sm transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-slate-950;
+  }
+
+  .btn-primary {
+    @apply bg-primary text-white hover:bg-primary-dark focus:ring-primary shadow-glow hover:shadow-glow-lg;
+  }
+
+  .btn-secondary {
+    @apply bg-slate-800 text-gray-300 border-slate-700 hover:bg-slate-700 hover:text-white focus:ring-slate-600;
+  }
+  
+  .btn-outline {
+    @apply bg-transparent border-slate-700 text-gray-300 hover:bg-slate-800 hover:text-white focus:ring-slate-600;
+  }
+
+  /* Cards */
+  .card {
+    @apply bg-slate-900/50 backdrop-blur-sm border border-slate-800 rounded-xl overflow-hidden transition-all duration-300;
+  }
+
+  .card-hover {
+    @apply hover:bg-slate-900/70 hover:border-slate-700 hover:-translate-y-1;
+  }
+
+  .card-glow {
+    @apply shadow-glow border-primary/20;
+  }
+
+  /* Navigation */
+  .nav-link {
+    @apply text-gray-400 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200;
+  }
+
+  .nav-link.active {
+    @apply text-primary font-semibold bg-primary/10;
+  }
+
+  .nav-glass {
+    @apply bg-slate-950/80 backdrop-blur-md border-b border-slate-800;
+  }
+
+  /* Forms */
+  input[type="text"],
+  input[type="email"],
+  input[type="password"],
+  input[type="tel"],
+  input[type="url"],
+  input[type="number"],
+  textarea,
+  select {
+    @apply block w-full px-4 py-3 rounded-lg border-slate-700 bg-slate-800 text-white placeholder-gray-400 focus:ring-primary focus:border-primary;
+  }
+
+  /* Utility classes */
+  .section-title {
+    @apply text-3xl md:text-4xl font-bold mb-4 text-center text-white;
+  }
+
+  .gradient-text {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-primary-light to-primary;
+  }
+  
+  .animate-on-scroll {
+    @apply opacity-0 transition-opacity duration-700 ease-out;
+  }
+  
+  .animate-on-scroll.visible {
+    @apply opacity-100 animate-slide-up;
+  }
+
+  /* Hero gradient background */
+  .hero-gradient {
+    background: linear-gradient(135deg, #020617 0%, #0F172A 50%, #1E293B 100%);
+  }
+
+  /* Subtle pattern overlay */
+  .pattern-dots {
+    background-image: radial-gradient(rgba(59, 130, 246, 0.1) 1px, transparent 1px);
+    background-size: 20px 20px;
+  }
+}
+
+/* Remove old particle styles */
+.particle, .particle-neon, .particle-cyber {
+  display: none;
+} 

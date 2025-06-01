@@ -1,0 +1,143 @@
+---
+layout: base.njk
+title: Book a Coaching Session - Psychological Rocket League Training
+description: Book your 1-on-1 psychological Rocket League coaching session. Secure online booking and transform your mental game.
+---
+
+<!-- Hero Section -->
+<section class="hero-gradient pattern-dots py-16 md:py-24">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <div class="animate-on-scroll">
+            <h1 class="text-4xl md:text-5xl font-display font-bold mb-6">
+                Book Your <span class="gradient-text">Session</span>
+            </h1>
+            <p class="text-xl text-gray-300 max-w-2xl mx-auto">
+                Ready to transform your mental game? Secure your personalized psychological coaching session with me below.
+            </p>
+        </div>
+    </div>
+</section>
+
+<!-- Booking Form Section -->
+<section class="py-16 md:py-24 bg-slate-900">
+    <div class="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="card card-glow p-6 md:p-10 animate-on-scroll">
+            <div class="text-center mb-8">
+                <h2 class="text-2xl md:text-3xl font-bold text-white mb-3">1-on-1 Psychological Coaching</h2>
+                <p class="text-primary font-semibold text-xl">$15 / hour</p>
+            </div>
+            
+            <form id="booking-form" action="https://formspree.io/f/YOUR_FORMSPREE_ID" method="POST" class="space-y-6">
+                <!-- Service Selection (Hidden, as there's only one primary service now) -->
+                <input type="hidden" name="service" value="1-on-1 Psychological Coaching">
+                <input type="hidden" name="price" value="15">
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                    <div>
+                        <label for="name" class="block text-sm font-medium text-neutral-dark mb-1">Full Name *</label>
+                        <input type="text" name="name" id="name" required class="w-full">
+                    </div>
+                    <div>
+                        <label for="email" class="block text-sm font-medium text-neutral-dark mb-1">Email Address *</label>
+                        <input type="email" name="email" id="email" required class="w-full">
+                    </div>
+                </div>
+
+                <div>
+                    <label for="discord" class="block text-sm font-medium text-neutral-dark mb-1">Discord Username *</label>
+                    <input type="text" name="discord" id="discord" placeholder="afos3122" required class="w-full">
+                </div>
+
+                <div>
+                    <label for="rank" class="block text-sm font-medium text-neutral-dark mb-1">Current Rocket League Rank *</label>
+                    <select id="rank" name="rank" required class="w-full">
+                        <option value="" disabled selected>Select your rank</option>
+                        <option value="Bronze">Bronze</option>
+                        <option value="Silver">Silver</option>
+                        <option value="Gold">Gold</option>
+                        <option value="Platinum">Platinum</option>
+                        <option value="Diamond">Diamond</option>
+                        <option value="Champion">Champion</option>
+                        <option value="Grand Champion">Grand Champion</option>
+                        <option value="Supersonic Legend">Supersonic Legend</option>
+                        <option value="Unranked">Unranked/New Player</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label for="goals" class="block text-sm font-medium text-neutral-dark mb-1">What are your main goals for coaching? *</label>
+                    <textarea name="goals" id="goals" rows="4" placeholder="e.g., Overcome tilt, improve decision-making, reach Champion rank..." required class="w-full"></textarea>
+                </div>
+
+                <div>
+                    <label for="availability" class="block text-sm font-medium text-neutral-dark mb-1">Your General Availability (including timezone) *</label>
+                    <textarea name="availability" id="availability" rows="3" placeholder="e.g., Weekdays 6 PM - 10 PM EST, Weekends flexible..." required class="w-full"></textarea>
+                </div>
+                
+                <div class="pt-2">
+                    <button type="submit" id="submit-button" class="btn btn-primary text-lg px-10 py-3 w-full">
+                        Request Booking ($15)
+                    </button>
+                </div>
+                <p id="form-message" class="text-sm text-center"></p>
+            </form>
+        </div>
+        
+        <div class="text-center mt-10 animate-on-scroll">
+            <h3 class="text-xl font-semibold text-white mb-3">My Booking Process:</h3>
+            <ol class="list-decimal list-inside text-gray-300 space-y-2 max-w-md mx-auto text-left">
+                <li>Fill out and submit the booking request form above.</li>
+                <li>I will contact you via Discord (afos3122) or Email within 24 hours to confirm your details and schedule your session.</li>
+                <li>Payment will be arranged (e.g., via PayPal, Stripe) once the session time is confirmed.</li>
+                <li>Prepare for your transformative psychological coaching session with me!</li>
+            </ol>
+        </div>
+    </div>
+</section>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const form = document.getElementById('booking-form');
+    const submitButton = document.getElementById('submit-button');
+    const formMessage = document.getElementById('form-message');
+
+    form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        submitButton.disabled = true;
+        submitButton.textContent = 'Submitting...';
+        formMessage.textContent = ''; // Clear previous messages
+
+        const formData = new FormData(form);
+        fetch(form.action, {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'Accept': 'application/json'
+            }
+        }).then(response => {
+            if (response.ok) {
+                form.reset();
+                formMessage.textContent = 'Thanks for your booking request! I will contact you shortly to confirm.';
+                formMessage.className = 'text-green-600 text-sm text-center mt-4';
+                submitButton.textContent = 'Request Sent!';
+            } else {
+                response.json().then(data => {
+                    if (Object.hasOwn(data, 'errors')) {
+                        formMessage.textContent = data["errors"].map(error => error["message"]).join(", ");
+                    } else {
+                        formMessage.textContent = 'Oops! There was a problem submitting your form. Please try again or contact me directly.';
+                    }
+                    formMessage.className = 'text-red-600 text-sm text-center mt-4';
+                    submitButton.disabled = false;
+                    submitButton.textContent = 'Request Booking ($15)';
+                })
+            }
+        }).catch(error => {
+            formMessage.textContent = 'Oops! There was a problem submitting your form. Please check your internet connection or contact me directly.';
+            formMessage.className = 'text-red-600 text-sm text-center mt-4';
+            submitButton.disabled = false;
+            submitButton.textContent = 'Request Booking ($15)';
+        });
+    });
+});
+</script> 
