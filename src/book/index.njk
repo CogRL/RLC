@@ -82,7 +82,7 @@ description: Book your 1-on-1 psychological Rocket League coaching session. Secu
                     <p id="service-price" class="text-primary font-semibold text-xl"></p>
                 </div>
                 
-                <form id="booking-form" action="https://formspree.io/f/YOUR_FORMSPREE_ID" method="POST" class="space-y-6">
+                <form id="booking-form" class="space-y-6">
                     <input type="hidden" name="service" id="selected-service" value="">
                     <input type="hidden" name="price" id="selected-price" value="">
 
@@ -130,7 +130,14 @@ description: Book your 1-on-1 psychological Rocket League coaching session. Secu
                     
                     <div class="pt-2">
                         <button type="submit" id="submit-button" class="btn btn-primary text-lg px-10 py-3 w-full">
-                            Request Booking
+                            <span id="button-text">Proceed to Payment</span>
+                            <span id="button-spinner" class="hidden">
+                                <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white inline" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                </svg>
+                                Processing...
+                            </span>
                         </button>
                     </div>
                     <div class="text-center">
@@ -144,11 +151,11 @@ description: Book your 1-on-1 psychological Rocket League coaching session. Secu
         </div>
         
         <div class="text-center mt-10 animate-on-scroll">
-            <h3 class="text-xl font-semibold text-white mb-3">My Booking Process:</h3>
+            <h3 class="text-xl font-semibold text-white mb-3">How It Works:</h3>
             <ol class="list-decimal list-inside text-gray-300 space-y-2 max-w-md mx-auto text-left">
-                <li>Select your preferred service above and fill out the booking form.</li>
-                <li>I will contact you via Discord (afos3122) or Email within 24 hours to confirm your details and schedule.</li>
-                <li>Payment will be arranged (e.g., via PayPal, Stripe) once confirmed.</li>
+                <li>Select your preferred service and fill out the booking form.</li>
+                <li>Complete secure payment through Stripe Checkout.</li>
+                <li>I'll contact you via Discord (afos3122) or Email within 24 hours to schedule.</li>
                 <li>Prepare for your transformative psychological coaching experience!</li>
             </ol>
         </div>
@@ -195,43 +202,68 @@ document.addEventListener('DOMContentLoaded', function () {
     const form = document.getElementById('booking-form');
     const submitButton = document.getElementById('submit-button');
     const formMessage = document.getElementById('form-message');
+    const buttonText = document.getElementById('button-text');
+    const buttonSpinner = document.getElementById('button-spinner');
 
     form.addEventListener('submit', function (e) {
         e.preventDefault();
+        
+        // Validate form
+        if (!form.checkValidity()) {
+            form.reportValidity();
+            return;
+        }
+
+        // Show loading state
         submitButton.disabled = true;
-        submitButton.textContent = 'Submitting...';
+        buttonText.classList.add('hidden');
+        buttonSpinner.classList.remove('hidden');
         formMessage.textContent = '';
 
+        // Gather form data
         const formData = new FormData(form);
-        fetch(form.action, {
+        const customerInfo = {
+            name: formData.get('name'),
+            email: formData.get('email'),
+            discord: formData.get('discord'),
+            rank: formData.get('rank'),
+            goals: formData.get('goals'),
+            availability: formData.get('availability')
+        };
+
+        const serviceType = formData.get('service') === '1-on-1 Psychological Coaching' ? 'coaching' : 'replay';
+
+        // Create checkout session
+        fetch('/.netlify/functions/create-checkout-session', {
             method: 'POST',
-            body: formData,
             headers: {
-                'Accept': 'application/json'
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                serviceType: serviceType,
+                customerInfo: customerInfo,
+                successUrl: `${window.location.origin}/success?session_id={CHECKOUT_SESSION_ID}`,
+                cancelUrl: `${window.location.origin}/book`
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.error) {
+                throw new Error(data.error);
             }
-        }).then(response => {
-            if (response.ok) {
-                form.reset();
-                formMessage.textContent = 'Thanks for your booking request! I will contact you shortly to confirm.';
-                formMessage.className = 'text-green-600 text-sm text-center mt-4';
-                submitButton.textContent = 'Request Sent!';
-            } else {
-                response.json().then(data => {
-                    if (Object.hasOwn(data, 'errors')) {
-                        formMessage.textContent = data["errors"].map(error => error["message"]).join(", ");
-                    } else {
-                        formMessage.textContent = 'Oops! There was a problem submitting your form. Please try again or contact me directly.';
-                    }
-                    formMessage.className = 'text-red-600 text-sm text-center mt-4';
-                    submitButton.disabled = false;
-                    submitButton.textContent = 'Request Booking';
-                })
-            }
-        }).catch(error => {
-            formMessage.textContent = 'Oops! There was a problem submitting your form. Please check your internet connection or contact me directly.';
+            
+            // Redirect to Stripe Checkout
+            window.location.href = data.url;
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            formMessage.textContent = 'Oops! There was a problem processing your request. Please try again or contact me directly.';
             formMessage.className = 'text-red-600 text-sm text-center mt-4';
+            
+            // Reset button state
             submitButton.disabled = false;
-            submitButton.textContent = 'Request Booking';
+            buttonText.classList.remove('hidden');
+            buttonSpinner.classList.add('hidden');
         });
     });
 });
