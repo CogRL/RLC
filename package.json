@@ -4,9 +4,10 @@
   "description": "Professional Rocket League coaching website",
   "main": "index.js",
   "scripts": {
-    "build": "npm run build:css && npx @11ty/eleventy",
+    "build": "npm run build:css:prod && npx @11ty/eleventy",
     "start": "npm run build:css && npx @11ty/eleventy --serve",
     "build:css": "npx tailwindcss -i ./src/styles/input.css -o ./src/styles/output.css --watch",
+    "build:css:prod": "npx tailwindcss -i ./src/styles/input.css -o ./src/styles/output.css --minify",
     "dev": "concurrently \"npm run build:css\" \"npx @11ty/eleventy --serve\"",
     "clean": "rm -rf _site"
   },
