@@ -171,6 +171,7 @@ function selectService(serviceType) {
     const selectedPrice = document.getElementById('selected-price');
     const goalsTextarea = document.getElementById('goals');
     const availabilitySection = document.getElementById('availability-section');
+    const availabilityInput = document.getElementById('availability');
     
     if (serviceType === 'coaching') {
         serviceTitle.textContent = '1-on-1 Psychological Coaching';
@@ -179,13 +180,16 @@ function selectService(serviceType) {
         selectedPrice.value = '20';
         goalsTextarea.placeholder = 'e.g., Overcome tilt, improve decision-making, reach Champion rank, build mental resilience...';
         availabilitySection.style.display = 'block';
-    } else if (serviceType === 'replay') {
+        availabilityInput.required = true;
+    } else {
         serviceTitle.textContent = 'Replay Analysis';
         servicePrice.textContent = '$5 / replay';
         selectedService.value = 'Replay Analysis';
         selectedPrice.value = '5';
         goalsTextarea.placeholder = 'e.g., Understand my decision-making patterns, identify mental weaknesses, improve game awareness...';
         availabilitySection.style.display = 'none';
+        availabilityInput.required = false;
+        availabilityInput.value = ''; // Clear the value when hidden
     }
     
     formContainer.classList.remove('hidden');
