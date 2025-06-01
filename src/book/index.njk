@@ -28,9 +28,15 @@ description: Book your 1-on-1 psychological Rocket League coaching session. Secu
             </div>
             
             <form id="booking-form" action="https://formspree.io/f/YOUR_FORMSPREE_ID" method="POST" class="space-y-6">
-                <!-- Service Selection (Hidden, as there's only one primary service now) -->
-                <input type="hidden" name="service" value="1-on-1 Psychological Coaching">
-                <input type="hidden" name="price" value="15">
+                <!-- Service Selection -->
+                <div>
+                    <label for="service" class="block text-sm font-medium text-neutral-dark mb-1">Service *</label>
+                    <select name="service" id="service" required class="w-full">
+                        <option value="1-on-1 Psychological Coaching" data-price="15">1-on-1 Psychological Coaching ($15/hour)</option>
+                        <option value="Replay Analysis" data-price="5">Replay Analysis ($5 per replay)</option>
+                    </select>
+                </div>
+                <input type="hidden" name="price" id="price" value="15">
 
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
                     <div>
@@ -100,6 +106,16 @@ document.addEventListener('DOMContentLoaded', function () {
     const form = document.getElementById('booking-form');
     const submitButton = document.getElementById('submit-button');
     const formMessage = document.getElementById('form-message');
+    const serviceSelect = document.getElementById('service');
+    const priceInput = document.getElementById('price');
+
+    // Update price and button label on service change
+    serviceSelect.addEventListener('change', function() {
+        const selectedOption = serviceSelect.options[serviceSelect.selectedIndex];
+        const price = selectedOption.getAttribute('data-price');
+        priceInput.value = price;
+        submitButton.textContent = `Request Booking ($${price})`;
+    });
 
     form.addEventListener('submit', function (e) {
         e.preventDefault();
@@ -129,14 +145,14 @@ document.addEventListener('DOMContentLoaded', function () {
                     }
                     formMessage.className = 'text-red-600 text-sm text-center mt-4';
                     submitButton.disabled = false;
-                    submitButton.textContent = 'Request Booking ($15)';
+                    submitButton.textContent = `Request Booking ($${priceInput.value})`;
                 })
             }
         }).catch(error => {
             formMessage.textContent = 'Oops! There was a problem submitting your form. Please check your internet connection or contact me directly.';
             formMessage.className = 'text-red-600 text-sm text-center mt-4';
             submitButton.disabled = false;
-            submitButton.textContent = 'Request Booking ($15)';
+            submitButton.textContent = `Request Booking ($${priceInput.value})`;
         });
     });
 });
