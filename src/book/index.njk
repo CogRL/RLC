@@ -12,116 +12,195 @@ description: Book your 1-on-1 psychological Rocket League coaching session. Secu
                 Book Your <span class="gradient-text">Session</span>
             </h1>
             <p class="text-xl text-gray-300 max-w-2xl mx-auto">
-                Ready to transform your mental game? Secure your personalized psychological coaching session with me below.
+                Choose the service that best fits your needs. Ready to transform your mental game?
             </p>
         </div>
     </div>
 </section>
 
-<!-- Booking Form Section -->
+<!-- Service Selection Section -->
 <section class="py-16 md:py-24 bg-slate-900">
-    <div class="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="card card-glow p-6 md:p-10 animate-on-scroll">
-            <div class="text-center mb-8">
-                <h2 class="text-2xl md:text-3xl font-bold text-white mb-3">1-on-1 Psychological Coaching</h2>
-                <p class="text-primary font-semibold text-xl">$15 / hour</p>
-            </div>
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <!-- Service Options Grid -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
             
-            <form id="booking-form" action="https://formspree.io/f/YOUR_FORMSPREE_ID" method="POST" class="space-y-6">
-                <!-- Service Selection -->
-                <div>
-                    <label for="service" class="block text-sm font-medium text-neutral-dark mb-1">Service *</label>
-                    <select name="service" id="service" required class="w-full">
-                        <option value="1-on-1 Psychological Coaching" data-price="15">1-on-1 Psychological Coaching ($15/hour)</option>
-                        <option value="Replay Analysis" data-price="5">Replay Analysis ($5 per replay)</option>
-                    </select>
-                </div>
-                <input type="hidden" name="price" id="price" value="15">
-
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                    <div>
-                        <label for="name" class="block text-sm font-medium text-neutral-dark mb-1">Full Name *</label>
-                        <input type="text" name="name" id="name" required class="w-full">
+            <!-- 1-on-1 Psychological Coaching -->
+            <div class="card card-glow p-6 md:p-8 animate-on-scroll text-center">
+                <div class="mb-6">
+                    <div class="w-16 h-16 bg-primary-gradient rounded-2xl flex items-center justify-center shadow-primary mx-auto mb-4">
+                        <span class="text-3xl">🧠</span>
                     </div>
-                    <div>
-                        <label for="email" class="block text-sm font-medium text-neutral-dark mb-1">Email Address *</label>
-                        <input type="email" name="email" id="email" required class="w-full">
+                    <h3 class="text-2xl font-bold text-white mb-2">1-on-1 Psychological Coaching</h3>
+                    <p class="text-primary font-bold text-3xl mb-4">$20<span class="text-lg text-gray-400">/hour</span></p>
+                    <p class="text-gray-300 mb-6">
+                        Personalized psychological training sessions focused on mindset, mental clarity, and performance optimization.
+                    </p>
+                    <ul class="text-sm text-gray-400 space-y-2 mb-6 text-left">
+                        <li>• Fear pattern identification & resolution</li>
+                        <li>• Confidence building systems</li>
+                        <li>• Tilt management techniques</li>
+                        <li>• Performance mindset development</li>
+                        <li>• Real-time mental coaching</li>
+                    </ul>
+                </div>
+                <button onclick="selectService('coaching')" class="btn btn-primary w-full text-lg py-3">
+                    Book 1-on-1 Session
+                </button>
+            </div>
+
+            <!-- Replay Analysis -->
+            <div class="card card-glow p-6 md:p-8 animate-on-scroll text-center">
+                <div class="mb-6">
+                    <div class="w-16 h-16 bg-cyber-gradient rounded-2xl flex items-center justify-center shadow-cyber mx-auto mb-4">
+                        <span class="text-3xl">🎥</span>
                     </div>
+                    <h3 class="text-2xl font-bold text-white mb-2">Replay Analysis</h3>
+                    <p class="text-primary font-bold text-3xl mb-4">$5<span class="text-lg text-gray-400">/replay</span></p>
+                    <p class="text-gray-300 mb-6">
+                        In-depth psychological analysis of your gameplay with actionable mental improvement strategies.
+                    </p>
+                    <ul class="text-sm text-gray-400 space-y-2 mb-6 text-left">
+                        <li>• Decision-making pattern analysis</li>
+                        <li>• Mental state identification</li>
+                        <li>• Pressure response evaluation</li>
+                        <li>• Strategic mindset recommendations</li>
+                        <li>• Detailed written feedback</li>
+                    </ul>
                 </div>
+                <button onclick="selectService('replay')" class="btn btn-secondary w-full text-lg py-3">
+                    Order Replay Analysis
+                </button>
+            </div>
+        </div>
 
-                <div>
-                    <label for="discord" class="block text-sm font-medium text-neutral-dark mb-1">Discord Username *</label>
-                    <input type="text" name="discord" id="discord" placeholder="afos3122" required class="w-full">
-                </div>
-
-                <div>
-                    <label for="rank" class="block text-sm font-medium text-neutral-dark mb-1">Current Rocket League Rank *</label>
-                    <select id="rank" name="rank" required class="w-full">
-                        <option value="" disabled selected>Select your rank</option>
-                        <option value="Bronze">Bronze</option>
-                        <option value="Silver">Silver</option>
-                        <option value="Gold">Gold</option>
-                        <option value="Platinum">Platinum</option>
-                        <option value="Diamond">Diamond</option>
-                        <option value="Champion">Champion</option>
-                        <option value="Grand Champion">Grand Champion</option>
-                        <option value="Supersonic Legend">Supersonic Legend</option>
-                        <option value="Unranked">Unranked/New Player</option>
-                    </select>
-                </div>
-
-                <div>
-                    <label for="goals" class="block text-sm font-medium text-neutral-dark mb-1">What are your main goals for coaching? *</label>
-                    <textarea name="goals" id="goals" rows="4" placeholder="e.g., Overcome tilt, improve decision-making, reach Champion rank..." required class="w-full"></textarea>
-                </div>
-
-                <div>
-                    <label for="availability" class="block text-sm font-medium text-neutral-dark mb-1">Your General Availability (including timezone) *</label>
-                    <textarea name="availability" id="availability" rows="3" placeholder="e.g., Weekdays 6 PM - 10 PM EST, Weekends flexible..." required class="w-full"></textarea>
+        <!-- Booking Form (Hidden by default) -->
+        <div id="booking-form-container" class="hidden">
+            <div class="card card-glow p-6 md:p-10 animate-on-scroll">
+                <div class="text-center mb-8">
+                    <h2 id="service-title" class="text-2xl md:text-3xl font-bold text-white mb-3"></h2>
+                    <p id="service-price" class="text-primary font-semibold text-xl"></p>
                 </div>
                 
-                <div class="pt-2">
-                    <button type="submit" id="submit-button" class="btn btn-primary text-lg px-10 py-3 w-full">
-                        Request Booking ($15)
-                    </button>
-                </div>
-                <p id="form-message" class="text-sm text-center"></p>
-            </form>
+                <form id="booking-form" action="https://formspree.io/f/YOUR_FORMSPREE_ID" method="POST" class="space-y-6">
+                    <input type="hidden" name="service" id="selected-service" value="">
+                    <input type="hidden" name="price" id="selected-price" value="">
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                        <div>
+                            <label for="name" class="block text-sm font-medium text-neutral-dark mb-1">Full Name *</label>
+                            <input type="text" name="name" id="name" required class="w-full">
+                        </div>
+                        <div>
+                            <label for="email" class="block text-sm font-medium text-neutral-dark mb-1">Email Address *</label>
+                            <input type="email" name="email" id="email" required class="w-full">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label for="discord" class="block text-sm font-medium text-neutral-dark mb-1">Discord Username *</label>
+                        <input type="text" name="discord" id="discord" placeholder="afos3122" required class="w-full">
+                    </div>
+
+                    <div>
+                        <label for="rank" class="block text-sm font-medium text-neutral-dark mb-1">Current Rocket League Rank *</label>
+                        <select id="rank" name="rank" required class="w-full">
+                            <option value="" disabled selected>Select your rank</option>
+                            <option value="Bronze">Bronze</option>
+                            <option value="Silver">Silver</option>
+                            <option value="Gold">Gold</option>
+                            <option value="Platinum">Platinum</option>
+                            <option value="Diamond">Diamond</option>
+                            <option value="Champion">Champion</option>
+                            <option value="Grand Champion">Grand Champion</option>
+                            <option value="Supersonic Legend">Supersonic Legend</option>
+                            <option value="Unranked">Unranked/New Player</option>
+                        </select>
+                    </div>
+
+                    <div id="goals-section">
+                        <label for="goals" class="block text-sm font-medium text-neutral-dark mb-1">What are your main goals? *</label>
+                        <textarea name="goals" id="goals" rows="4" placeholder="" required class="w-full"></textarea>
+                    </div>
+
+                    <div id="availability-section">
+                        <label for="availability" class="block text-sm font-medium text-neutral-dark mb-1">Your General Availability (including timezone) *</label>
+                        <textarea name="availability" id="availability" rows="3" placeholder="e.g., Weekdays 6 PM - 10 PM EST, Weekends flexible..." required class="w-full"></textarea>
+                    </div>
+                    
+                    <div class="pt-2">
+                        <button type="submit" id="submit-button" class="btn btn-primary text-lg px-10 py-3 w-full">
+                            Request Booking
+                        </button>
+                    </div>
+                    <div class="text-center">
+                        <button type="button" onclick="backToSelection()" class="text-gray-400 hover:text-white text-sm underline">
+                            ← Back to service selection
+                        </button>
+                    </div>
+                    <p id="form-message" class="text-sm text-center"></p>
+                </form>
+            </div>
         </div>
         
         <div class="text-center mt-10 animate-on-scroll">
             <h3 class="text-xl font-semibold text-white mb-3">My Booking Process:</h3>
             <ol class="list-decimal list-inside text-gray-300 space-y-2 max-w-md mx-auto text-left">
-                <li>Fill out and submit the booking request form above.</li>
-                <li>I will contact you via Discord (afos3122) or Email within 24 hours to confirm your details and schedule your session.</li>
-                <li>Payment will be arranged (e.g., via PayPal, Stripe) once the session time is confirmed.</li>
-                <li>Prepare for your transformative psychological coaching session with me!</li>
+                <li>Select your preferred service above and fill out the booking form.</li>
+                <li>I will contact you via Discord (afos3122) or Email within 24 hours to confirm your details and schedule.</li>
+                <li>Payment will be arranged (e.g., via PayPal, Stripe) once confirmed.</li>
+                <li>Prepare for your transformative psychological coaching experience!</li>
             </ol>
         </div>
     </div>
 </section>
 
 <script>
+function selectService(serviceType) {
+    const formContainer = document.getElementById('booking-form-container');
+    const serviceTitle = document.getElementById('service-title');
+    const servicePrice = document.getElementById('service-price');
+    const selectedService = document.getElementById('selected-service');
+    const selectedPrice = document.getElementById('selected-price');
+    const goalsTextarea = document.getElementById('goals');
+    const availabilitySection = document.getElementById('availability-section');
+    
+    if (serviceType === 'coaching') {
+        serviceTitle.textContent = '1-on-1 Psychological Coaching';
+        servicePrice.textContent = '$20 / hour';
+        selectedService.value = '1-on-1 Psychological Coaching';
+        selectedPrice.value = '20';
+        goalsTextarea.placeholder = 'e.g., Overcome tilt, improve decision-making, reach Champion rank, build mental resilience...';
+        availabilitySection.style.display = 'block';
+    } else if (serviceType === 'replay') {
+        serviceTitle.textContent = 'Replay Analysis';
+        servicePrice.textContent = '$5 / replay';
+        selectedService.value = 'Replay Analysis';
+        selectedPrice.value = '5';
+        goalsTextarea.placeholder = 'e.g., Understand my decision-making patterns, identify mental weaknesses, improve game awareness...';
+        availabilitySection.style.display = 'none';
+    }
+    
+    formContainer.classList.remove('hidden');
+    formContainer.scrollIntoView({ behavior: 'smooth' });
+}
+
+function backToSelection() {
+    const formContainer = document.getElementById('booking-form-container');
+    formContainer.classList.add('hidden');
+    document.querySelector('.grid').scrollIntoView({ behavior: 'smooth' });
+}
+
 document.addEventListener('DOMContentLoaded', function () {
     const form = document.getElementById('booking-form');
     const submitButton = document.getElementById('submit-button');
     const formMessage = document.getElementById('form-message');
-    const serviceSelect = document.getElementById('service');
-    const priceInput = document.getElementById('price');
-
-    // Update price and button label on service change
-    serviceSelect.addEventListener('change', function() {
-        const selectedOption = serviceSelect.options[serviceSelect.selectedIndex];
-        const price = selectedOption.getAttribute('data-price');
-        priceInput.value = price;
-        submitButton.textContent = `Request Booking ($${price})`;
-    });
 
     form.addEventListener('submit', function (e) {
         e.preventDefault();
         submitButton.disabled = true;
         submitButton.textContent = 'Submitting...';
-        formMessage.textContent = ''; // Clear previous messages
+        formMessage.textContent = '';
 
         const formData = new FormData(form);
         fetch(form.action, {
@@ -145,14 +224,14 @@ document.addEventListener('DOMContentLoaded', function () {
                     }
                     formMessage.className = 'text-red-600 text-sm text-center mt-4';
                     submitButton.disabled = false;
-                    submitButton.textContent = `Request Booking ($${priceInput.value})`;
+                    submitButton.textContent = 'Request Booking';
                 })
             }
         }).catch(error => {
             formMessage.textContent = 'Oops! There was a problem submitting your form. Please check your internet connection or contact me directly.';
             formMessage.className = 'text-red-600 text-sm text-center mt-4';
             submitButton.disabled = false;
-            submitButton.textContent = `Request Booking ($${priceInput.value})`;
+            submitButton.textContent = 'Request Booking';
         });
     });
 });
