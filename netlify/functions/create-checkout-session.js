@@ -1,4 +1,4 @@
-const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
+// const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY); // Stripe is no longer used
 
 exports.handler = async (event, context) => {
   // Enable CORS
@@ -29,74 +29,49 @@ exports.handler = async (event, context) => {
     const { 
       serviceType, 
       customerInfo, 
-      successUrl, 
-      cancelUrl 
+      // successUrl, // No longer redirecting to Stripe, success is handled directly
+      // cancelUrl // No longer redirecting to Stripe
     } = JSON.parse(event.body);
 
     // Validate required fields
-    if (!serviceType || !customerInfo || !customerInfo.email) {
+    if (!serviceType || !customerInfo || !customerInfo.email || !customerInfo.discord) { // Added discord as required
       return {
         statusCode: 400,
         headers,
-        body: JSON.stringify({ error: 'Missing required fields' }),
+        body: JSON.stringify({ error: 'Missing required fields (service, email, discord)' }),
       };
     }
 
-    // Define your Stripe product/price IDs
-    // You'll need to replace these with your actual Stripe Price IDs
-    const priceMap = {
-      'coaching': process.env.STRIPE_COACHING_PRICE_ID, // $20/hour coaching
-      'replay': process.env.STRIPE_REPLAY_PRICE_ID       // $5/replay analysis
-    };
+    // Simulate a successful booking without Stripe
+    // console.log('Simulating booking for:', serviceType, customerInfo); // Optional: for server-side logging
 
-    const priceId = priceMap[serviceType];
-    if (!priceId) {
-      return {
-        statusCode: 400,
-        headers,
-        body: JSON.stringify({ error: 'Invalid service type' }),
-      };
-    }
+    // Generate a simple mock session ID (e.g., timestamp + random number)
+    const mockSessionId = `mock_${Date.now()}_${Math.random().toString(36).substring(2, 15)}`;
 
-    // Create Checkout Session
-    const session = await stripe.checkout.sessions.create({
-      payment_method_types: ['card'],
-      line_items: [
-        {
-          price: priceId,
-          quantity: 1,
-        },
-      ],
-      mode: 'payment',
-      customer_email: customerInfo.email,
-      metadata: {
-        service_type: serviceType,
-        customer_name: customerInfo.name || '',
-        discord_username: customerInfo.discord || '',
-        rocket_league_rank: customerInfo.rank || '',
-        goals: customerInfo.goals || '',
-        availability: customerInfo.availability || '',
-      },
-      success_url: successUrl || `${process.env.URL}/success?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: cancelUrl || `${process.env.URL}/book`,
-    });
-
+    // Return a success-like response directly
+    // The client-side will redirect to the success page with this mockSessionId
     return {
       statusCode: 200,
       headers,
       body: JSON.stringify({ 
-        sessionId: session.id,
-        url: session.url 
+        // sessionId: mockSessionId, // The success page expects a 'sessionId' in the response to construct its URL query param
+        // The client-side script in book/index.njk will handle redirecting to success page
+        // We need to provide the 'url' that the client side expects for redirection.
+        // Let's construct a URL to the success page. The client expects `data.url`.
+        // The client-side successUrl was: `${window.location.origin}/success?session_id={CHECKOUT_SESSION_ID}`
+        // We will pass the mockSessionId so the success page can display it.
+        url: `${process.env.URL || 'https://rlclarity.shop'}/success?session_id=${mockSessionId}`, // Ensure URL is defined
+        sessionId: mockSessionId // also pass sessionID directly if success page wants to use it from response data
       }),
     };
 
   } catch (error) {
-    console.error('Error creating checkout session:', error);
+    console.error('Error in mock booking process:', error);
     return {
       statusCode: 500,
       headers,
       body: JSON.stringify({ 
-        error: 'Failed to create checkout session',
+        error: 'Failed to process booking',
         details: error.message 
       }),
     };

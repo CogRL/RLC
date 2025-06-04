@@ -14,10 +14,11 @@ description: Your payment was successful. We'll be in touch soon to schedule you
                 </svg>
             </div>
             <h1 class="text-4xl md:text-5xl font-display font-bold mb-6">
-                Payment <span class="gradient-text">Successful!</span>
+                Booking <span class="gradient-text">Confirmed!</span>
             </h1>
             <p class="text-xl text-gray-300 max-w-2xl mx-auto mb-8">
-                Thank you for choosing RLClarity.shop! Your payment has been processed successfully.
+                Thank you for choosing RLClarity.shop! Your request has been submitted.
+                <br>I will contact you on Discord (afos3122) or via Email within 24 hours to finalize the details.
             </p>
             <p id="order-id-display" class="text-lg text-cyber-400 font-mono mt-4"></p>
         </div>
@@ -25,32 +26,42 @@ description: Your payment was successful. We'll be in touch soon to schedule you
 </section>
 
 <!-- Next Steps Section -->
-<section class="py-16 md:py-20 bg-slate-900">
-    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="card card-glow p-8 md:p-12 animate-on-scroll text-center">
-            <h2 class="text-3xl font-bold text-white mb-8">What Happens Next?</h2>
-            
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+<section class="py-16 md:py-24 bg-slate-900">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12 animate-on-scroll">
+            <h2 class="text-3xl font-bold text-white mb-3">What Happens Next?</h2>
+            <p class="text-lg text-gray-300">
+                Please keep an eye on your Discord messages or Email inbox.
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center animate-on-scroll">
+            <!-- Step 1 -->
+            <div class="card-simple p-6">
                 <div class="text-center">
                     <div class="w-16 h-16 bg-primary-gradient rounded-2xl flex items-center justify-center shadow-primary mx-auto mb-4">
                         <span class="text-2xl font-bold text-white">1</span>
                     </div>
-                    <h3 class="text-lg font-semibold text-white mb-2">Confirmation</h3>
+                    <h3 class="text-lg font-semibold text-white mb-2">Request Received</h3>
                     <p class="text-gray-400 text-sm">
-                        You'll receive an email confirmation with your order details (including your Order ID) within the next few minutes.
+                        Your booking request is confirmed. I have your details.
                     </p>
                 </div>
-                
+            </div>
+            <!-- Step 2 -->
+            <div class="card-simple p-6">
                 <div class="text-center">
-                    <div class="w-16 h-16 bg-primary-gradient rounded-2xl flex items-center justify-center shadow-primary mx-auto mb-4">
+                    <div class="w-16 h-16 bg-cyber-gradient rounded-2xl flex items-center justify-center shadow-cyber mx-auto mb-4">
                         <span class="text-2xl font-bold text-white">2</span>
                     </div>
-                    <h3 class="text-lg font-semibold text-white mb-2">Verify Your Order</h3>
+                    <h3 class="text-lg font-semibold text-white mb-2">I'll Contact You</h3>
                     <p class="text-gray-400 text-sm">
-                        Please message me on Discord (afos3122) with your <strong class="text-cyber-400">Order ID</strong> from your confirmation email so I can verify your purchase and schedule your session.
+                        I will reach out via Discord (afos3122) or Email within 24 hours to discuss scheduling and your goals.
                     </p>
                 </div>
-                
+            </div>
+            <!-- Step 3 -->
+            <div class="card-simple p-6">
                 <div class="text-center">
                     <div class="w-16 h-16 bg-primary-gradient rounded-2xl flex items-center justify-center shadow-primary mx-auto mb-4">
                         <span class="text-2xl font-bold text-white">3</span>
@@ -61,25 +72,26 @@ description: Your payment was successful. We'll be in touch soon to schedule you
                     </p>
                 </div>
             </div>
-            
-            <div class="bg-slate-800 rounded-xl p-6 mb-8">
-                <h3 class="text-xl font-semibold text-white mb-4">Contact Information</h3>
-                <div class="text-gray-300 space-y-2">
-                    <p><strong>Discord:</strong> afos3122</p>
-                    <p><strong>Important:</strong> When messaging, please include your <strong class="text-cyber-400">Order ID</strong> for faster verification.</p>
-                    <p><strong>Response Time:</strong> Within 24 hours after verification.</p>
-                    <p><strong>Questions?</strong> Feel free to reach out anytime!</p>
-                </div>
+        </div>
+        
+        <div class="bg-slate-800 rounded-xl p-6 mb-8">
+            <h3 class="text-xl font-semibold text-white mb-4">Important Information</h3>
+            <div class="text-gray-300 space-y-2">
+                <p><strong>My Discord:</strong> afos3122 (Friend requests are welcome!)</p>
+                <p>Please ensure your Discord DMs are open from server members or add me as a friend.</p>
+                <p><strong>Reference ID:</strong> <span id="reference-id-inline" class="text-cyber-400"></span> (Mention this if you contact me first)</p>
+                <p><strong>Response Time:</strong> I'll try to contact you within 24 hours.</p>
+                <p><strong>Questions?</strong> Feel free to message me on Discord anytime!</p>
             </div>
-            
-            <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                <a href="/" class="btn btn-primary">
-                    Return Home
-                </a>
-                <a href="/services/" class="btn btn-secondary">
-                    View Services
-                </a>
-            </div>
+        </div>
+        
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+            <a href="/" class="btn btn-primary">
+                Return Home
+            </a>
+            <a href="/services/" class="btn btn-secondary">
+                View Services
+            </a>
         </div>
     </div>
 </section>
@@ -90,17 +102,21 @@ document.addEventListener('DOMContentLoaded', function() {
     const urlParams = new URLSearchParams(window.location.search);
     const sessionId = urlParams.get('session_id');
     const orderIdDisplay = document.getElementById('order-id-display');
+    const referenceIdInline = document.getElementById('reference-id-inline');
     
     if (sessionId) {
+        const displayId = 'Ref: ' + sessionId;
         if(orderIdDisplay) {
-            orderIdDisplay.textContent = 'Your Order ID: ' + sessionId;
+            orderIdDisplay.textContent = displayId;
         }
-        // You could send this to analytics or your own tracking system
-        console.log('Stripe session ID (Order ID):', sessionId);
+        if(referenceIdInline) {
+            referenceIdInline.textContent = sessionId;
+        }
+        console.log('Booking Reference ID:', sessionId);
         
-        // Optional: Send to Google Analytics or other tracking
+        // Optional: Send to Google Analytics or other tracking for 'booking_confirmed' event
         if (typeof gtag !== 'undefined') {
-            gtag('event', 'purchase', {
+            gtag('event', 'booking_confirmed', {
                 'transaction_id': sessionId,
                 'currency': 'USD'
             });

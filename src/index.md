@@ -14,11 +14,11 @@ description: Transform your Rocket League game through psychology & self-awarene
                     🧠 Psychological Coaching
                 </div>
                 <h1 class="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-display font-bold leading-tight">
-                    <span class="gradient-text">Unlock Your Peak</span><br/>
-                    <span class="text-white">Rocket League Performance</span>
+                    FREE COACHING,<br/>
+                    <span class="text-white">FOR THE LOVE OF THE GAME</span>
                 </h1>
                 <p class="text-xl md:text-2xl lg:text-3xl text-void-300 max-w-4xl mx-auto leading-relaxed">
-                    Stop fighting your own mind. Discover the psychological keys to consistent improvement, mental clarity, and achieving your true rank.
+                    No payment. No catch. Just genuine psychological coaching to help you reach your Rocket League potential.
                 </p>
             </div>
             <div class="flex flex-col sm:flex-row gap-6 justify-center pt-8">
