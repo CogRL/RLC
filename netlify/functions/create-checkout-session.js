@@ -43,7 +43,7 @@ exports.handler = async (event, context) => {
     }
 
     // Simulate a successful booking without Stripe
-    // console.log('Simulating booking for:', serviceType, customerInfo); // Optional: for server-side logging
+    console.log('[BOOKING]', { serviceType, customerInfo, mockSessionId });
 
     // Generate a simple mock session ID (e.g., timestamp + random number)
     const mockSessionId = `mock_${Date.now()}_${Math.random().toString(36).substring(2, 15)}`;
